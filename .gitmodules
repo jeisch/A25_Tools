@@ -1,0 +1,6 @@
+[submodule "13MD05-90"]
+	path = 13MD05-90
+	url = https://github.com/MEN-Mikro-Elektronik/13MD05-90.git
+[submodule "A25_files"]
+	path = A25_files
+	url = https://github.com/ThomasSchnuerer/A25_files.git
