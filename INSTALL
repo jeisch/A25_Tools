@@ -28,6 +28,17 @@ echo "Install A25 drivers"
 (cd A25_files && make clean)
 echo "Done Installing A25 drivers"
 
+echo "Load VME Kernel Module at boot up"
+echo "men_pldz002_cham" > /etc/modules-load.d/men_pldz002_cham.conf
+echo 'ACTION=="add",SUBSYSTEM=="module",KERNEL=="men_pldz002_cham",RUN+="/opt/menlinux/DRIVERS/VME_16Z002/nodes.sh"' > /etc/udev/rules.d/99-vme4l_nodes.rules
+echo "modules-load file written"
+
+
+echo "Load VME Kernel driver now"
+modprobe men_pldz002_cham
+/opt/menlinux/DRIVERS/VME_16Z002/nodes.sh
+echo "VME Kernel driver loaded"
+
 echo "Install complete!"
 
 
