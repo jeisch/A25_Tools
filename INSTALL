@@ -13,6 +13,10 @@ fi
 
 cd "$(dirname "$0")"
 
+yum -y check-update
+yum -y upgrade
+yum -y groupinstall "Development Tools"
+yum -y install kernel-devel
 
 echo "Update git submodules"
 $nonroot_cmd git submodule update --init --recursive
