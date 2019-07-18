@@ -11,12 +11,40 @@ else
 	nonroot_cmd=""
 fi
 
+# unload the driver if it's already loaded
+modprobe -r men_pldz002_cham
+
 cd "$(dirname "$0")"
 
+# keep things up to date
 yum -y check-update
 yum -y upgrade
 yum -y groupinstall "Development Tools"
 yum -y install kernel-devel
+
+# check the kernel version
+running_kernel=`uname -r`
+last_installed_kernel=`rpm -q --qf '%{INSTALLTIME}\t%{Version}-%{Release}.%{Arch}\n' kernel | sort -n | tail -1 | cut -f 2`
+echo "Running kernel $running_kernel"
+echo "Last installed kernel $last_installed_kernel"
+if [ $running_kernel != $last_installed_kernel ]; then
+	echo "Newer kernel installed, please uninstall or reboot"
+	exit 1
+fi
+
+# check for symlink in /usr/src to kernel headers -- not sure what would make this
+# This link seems to be bad practice, but the drivers require it.
+if [ "/usr/src/kernels/$running_kernel" != "`readlink /usr/src/linux`" ]; then
+	echo "Need symblic link from /usr/src/linux to /usr/src/kernels/$running_kernel"
+	if [ -e /usr/src/linux ]; then
+		echo "Deleting the existing link to `readlink /usr/src/linux`"
+		rm /usr/src/linux
+	fi
+	ln -s "/usr/src/kernels/$running_kernel" /usr/src/linux
+	echo "Made the link"
+fi
+	
+
 
 echo "Update git submodules"
 $nonroot_cmd git submodule update --init --recursive
