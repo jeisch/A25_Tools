@@ -56,7 +56,7 @@ echo "Done Installing MEN MDIS for Linux System Package"
 
 echo "Install A25 drivers"
 # it seems make needs to be run as root, for some reason.
-(cd A25_files && make &&  make install && /opt/menlinux/DRIVERS/VME_16Z002/nodes.sh && echo “/usr/local/lib” > etc/ld.so.conf.d/menlinux.conf && ldconfig)
+(cd A25_files && make &&  make install && /opt/menlinux/DRIVERS/VME_16Z002/nodes.sh && echo "/usr/local/lib" > /etc/ld.so.conf.d/menlinux.conf && ldconfig)
 (cd A25_files && make clean)
 echo "Done Installing A25 drivers"
 
