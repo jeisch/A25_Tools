@@ -4,3 +4,6 @@
 [submodule "A25_files"]
 	path = A25_files
 	url = https://github.com/ThomasSchnuerer/A25_files.git
+[submodule "a25_demo"]
+	path = a25_demo
+	url = https://github.com/jeisch/a25_demo.git
